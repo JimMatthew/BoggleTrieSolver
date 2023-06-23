@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 /*
  * This class uses a Trie to recursively search a boggle board to find all valid words
- * Instantiate with BoggleTrieDfsSolver(). You must provide the dictionary as either HashSet<String> or List<String>
+ * Instantiate with BoggleTrieSolver(). You must provide the dictionary as either HashSet<String> or List<String>
  * A boggle Board is to be represented as a 16 item long String Array, containing 1 letter per String
  * Call the solve method by passing a single board as a String[], or you can pass multiple boards 
  * as a List<String[]>. 
