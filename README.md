@@ -1,7 +1,7 @@
 # Boggle
 
 BoggleSolverTrie contains methods for solving Boggle boards. 
-You must provide it a dictionary as a HashSet\<String> or List<String>. 
+You must provide it a dictionary as a HashSet\<String> or List\<String>. 
 
 You then provide it a single board as a String[], or multiple boards as a List<String[]>, and it will return all words found on the board as List<String>, or all boards as List<List<String>>. 
 
