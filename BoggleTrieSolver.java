@@ -30,7 +30,6 @@ public class BoggleTrieSolver {
 	private static TrieNodee root;
 	static final int ALPHABET_SIZE = 26;
 	
-	
 	public BoggleTrieSolver() {
 		root = new TrieNodee();
 	}
@@ -45,17 +44,17 @@ public class BoggleTrieSolver {
 		loadWordList(dictionary);
 	}
 	
-    static class TrieNodee {
-        TrieNodee[] children = new TrieNodee[ALPHABET_SIZE];
-        boolean isEndOfWord;
-         
-        TrieNodee(){
-            isEndOfWord = false;
-            for (int i = 0; i < ALPHABET_SIZE; i++) {
-            	children[i] = null;
-            } 
-        }
-    };
+	static class TrieNodee {
+		TrieNodee[] children = new TrieNodee[ALPHABET_SIZE];
+	        boolean isEndOfWord;
+	         
+	        TrieNodee(){
+	            isEndOfWord = false;
+	            for (int i = 0; i < ALPHABET_SIZE; i++) {
+	            	children[i] = null;
+	            } 
+	        }
+	    };
       
     static boolean isEmpty(TrieNodee root) {
         for (int i = 0; i < ALPHABET_SIZE; i++)
@@ -85,21 +84,17 @@ public class BoggleTrieSolver {
     		throw new IllegalArgumentException("Board Array must be 16 Strings long");
     	}
     	setBoard(board);
-		long start = System.currentTimeMillis();
-		Boolean[][] visited = new Boolean[4][4];
-		resetVisited(visited);
+	Boolean[][] visited = new Boolean[4][4];
+	resetVisited(visited);
 		
-		for (int i = 0; i < 4; i ++) {
-			for (int j = 0; j < 4; j++) {
-				solver(visited, "", i, j);
-			}
+	for (int i = 0; i < 4; i ++) {
+		for (int j = 0; j < 4; j++) {
+			solver(visited, "", i, j);
 		}
-		long end = System.currentTimeMillis();
-		double t = ((end-start)/1000.0);
-		System.out.println("Time to solve using Trie: " + t + " seconds");	
-		wordsFound = wordsFound.stream().distinct().collect(Collectors.toList());
-		Collections.sort(wordsFound, new StringSort());
-		return wordsFound;
+	}	
+	wordsFound = wordsFound.stream().distinct().collect(Collectors.toList());
+	Collections.sort(wordsFound, new StringSort());
+	return wordsFound;
 	}
     
    
@@ -109,34 +104,26 @@ public class BoggleTrieSolver {
     //Words in each List are deduplicated and sorted largest first. 
     
     public List<List<String>> solveList(List<String[]> boards) {
-		List<List<String>> lls = new ArrayList<List<String>>();
+	List<List<String>> lls = new ArrayList<List<String>>();
 		
-		for (String[] sa : boards) {
+	for (String[] sa : boards) {
+		if (sa.length != 16) {
+	    	throw new IllegalArgumentException("Board " + boards.indexOf(sa) + " does not contain 16 elements");
+	}	
+		long start = System.currentTimeMillis();
+		setBoard(sa);
+		Boolean[][] visited = new Boolean[4][4];
+		resetVisited(visited);
 			
-			if (sa.length != 16) {
-	    		throw new IllegalArgumentException("Board " + boards.indexOf(sa) + " does not contain 16 elements");
-	    	}
-			
-			long start = System.currentTimeMillis();
-			setBoard(sa);
-			Boolean[][] visited = new Boolean[4][4];
-			resetVisited(visited);
-			
-			for (int i = 0; i < 4; i ++) {
-				
-				for (int j = 0; j < 4; j++) {
-					solver(visited, "", i, j);
-				}
+		for (int i = 0; i < 4; i ++) {	
+			for (int j = 0; j < 4; j++) {
+				solver(visited, "", i, j);
 			}
-			
-			long end = System.currentTimeMillis();
-			double t = ((end-start)/1000.0);
-			System.out.println("Time to solve: " + t + " seconds");	
-			wordsFound = wordsFound.stream().distinct().collect(Collectors.toList());
-			Collections.sort(wordsFound, new StringSort());
-			lls.add(wordsFound);
 		}
-		
+		wordsFound = wordsFound.stream().distinct().collect(Collectors.toList());
+		Collections.sort(wordsFound, new StringSort());
+		lls.add(wordsFound);
+		}
 		return lls;
 	}
     
@@ -147,9 +134,9 @@ public class BoggleTrieSolver {
     //searching as there is no valid word to be found from this position
     
     private void solver(Boolean[][] visited, String current, int row, int col) {
-	    visited[row][col] = true;
-	    current += board[row][col];
-	    int level;
+	visited[row][col] = true;
+	current += board[row][col];
+	int level;
         int length = current.length();
         int index;
         TrieNodee pCrawl = root;
